@@ -98,25 +98,32 @@ int counter = 1;
 sets.push_back(e_set);
 vector<vector<char>> vec;
 int columnSize = 3;
-vec.push_back(vector<char>(columnSize));
-for(int i=1;i<3;i++){
-set<int> temp;
-temp = e_closure(move(sets[0],transition_table,i),transition_table);
-if(!checker(sets,temp)){
-sets.push_back(temp);
-setHash[temp] = charList[counter];
-vec[0][i] = charList[counter];
-counter++;
-}
-else{
-vec[0][i]= charList[counter];
-}
-}
-for(int j=0;j<vec.size();j++){
-for(int i=0;i<3;i++){
-cout<<vec[j][i];
-}
-}
+
+    for(int j=0;j<sets.size();j++){
+        vec.push_back(vector<char>(columnSize));
+        // cout<<sets.size()<<"size"<<endl;
+        vec[j][0] = setHash[sets[j]];
+        for(int i=1;i<3;i++){
+            set<int> temp;
+            temp = e_closure(move(sets[j],transition_table,i),transition_table);
+            if(!checker(sets,temp)){
+                sets.push_back(temp);
+                setHash[temp] = charList[counter];
+                vec[j][i] = charList[counter];
+                counter++;
+            }
+            else{
+                vec[j][i]= setHash[temp];
+            }
+    }
+    }
+
+    for(int j=0;j<vec.size();j++){
+        for(int i=0;i<3;i++){
+        cout<<vec[j][i];
+        }
+        cout<<endl;
+    }
 
     // Print the set outside the loop
     for (const int& i : e_set) {
@@ -129,14 +136,14 @@ cout<<endl;
     return 0;
 }
 
-//0 - - 1,7
-//1 - - 2,4
-//2 3 - -
-//3 - - 6
-//4 - 5 -
-//5 - - 6
-//6 - - 1,7
-//7 8 - -
-//8 - 9 -
-//9 - 10 -
-//10 - - -
+// 0 - - 1,7
+// 1 - - 2,4
+// 2 3 - -
+// 3 - - 6
+// 4 - 5 -
+// 5 - - 6
+// 6 - - 1,7
+// 7 8 - -
+// 8 - 9 -
+// 9 - 10 -
+// 10 - - -
